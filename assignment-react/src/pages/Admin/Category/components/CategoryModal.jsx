@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Input, message } from "antd";
-import axiosInstance from "../../../../utils/axiosInstance";
 
 const CategoryModal = ({ visible, onCancel, onConfirm, category }) => {
   const [name, setName] = useState("");

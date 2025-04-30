@@ -1,5 +1,4 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
 import CartPage from "../pages/User/Cart/CartPage";
 import RequireUser from "../components/RequireUser";
 import BorrowingPage from "../pages/User/Borrowing/BorrowingPage";

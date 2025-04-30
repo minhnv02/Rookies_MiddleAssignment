@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { Button, Select, Spin, Table, message } from "antd";
-import { MdCancel } from "react-icons/md";
-import { render } from "@testing-library/react";
 import { Link } from "react-router-dom";
 
 const Borrowing = () => {

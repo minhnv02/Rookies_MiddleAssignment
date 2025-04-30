@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const UnAuthor = () => {
   const navigate = useNavigate();
-  debugger
   const goBack = () => {
     navigate(-1);
   };

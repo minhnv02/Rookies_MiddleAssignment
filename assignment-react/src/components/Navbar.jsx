@@ -14,7 +14,6 @@ import { FaCartPlus } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { FaSignInAlt } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
-debugger
 const Navbar = ({ isAuthenticated, role }) => {
   const userItems = [
     { label: "Home", path: "/home", icon: <FaHome style={{ marginRight: 8 }} /> },
