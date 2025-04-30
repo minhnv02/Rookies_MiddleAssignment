@@ -1,40 +1,40 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import axiosInstance from "../../../../utils/axiosInstance";
+"use client"
+
+import { useState, useEffect, useContext, useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Card,
   Row,
   Col,
   message,
-  Rate,
   Layout,
   Input,
   Space,
   Button,
   Spin,
   Pagination,
-} from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import {
-  FaCartPlus,
-  FaHeart,
-  FaSearch,
-  FaRegUser,
-  FaCalendarAlt,
-} from "react-icons/fa";
-import { BiCategory } from "react-icons/bi";
-import debounce from "lodash.debounce";
+  Typography,
+  Divider,
+  Tag,
+  Tooltip,
+} from "antd"
+import { FaCartPlus, FaHeart, FaSearch, FaRegUser, FaCalendarAlt } from "react-icons/fa"
+import { BiCategory } from "react-icons/bi"
+import debounce from "lodash.debounce"
+import axiosInstance from "../../../../utils/axiosInstance"
+import { AuthContext } from "../../../../contexts/AuthContext"
 
-const { Content, Sider } = Layout;
-const { Meta } = Card;
+const { Content, Sider } = Layout
+const { Meta } = Card
+const { Title, Text } = Typography
 
 const Home = ({ endpoint }) => {
-  const [books, setBooks] = useState([]);
-  const [lovedBooks, setLovedBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [totalBooks, setTotalBooks] = useState(0);
-  const { auth } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [books, setBooks] = useState([])
+  const [lovedBooks, setLovedBooks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [totalBooks, setTotalBooks] = useState(0)
+  const { auth } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const [searchParams, setSearchParams] = useState({
     name: "",
@@ -43,311 +43,256 @@ const Home = ({ endpoint }) => {
     releaseYearTo: null,
     categoryName: "",
     pageNumber: 1,
-    pageSize: 10,
-  });
+    pageSize: 12,
+  })
 
   const debouncedSearch = useCallback(
     debounce((newParams) => {
-      setSearchParams((prev) => ({ ...prev, ...newParams, pageNumber: 1 }));
+      setSearchParams((prev) => ({ ...prev, ...newParams, pageNumber: 1 }))
     }, 1000),
     []
-  );
+  )
 
   useEffect(() => {
     const fetchBooks = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
-        const formData = new FormData();
+        const formData = new FormData()
         Object.keys(searchParams).forEach((key) => {
           if (searchParams[key] !== null && searchParams[key] !== "") {
-            formData.append(key, searchParams[key]);
+            formData.append(key, searchParams[key])
           }
-        });
-        if (endpoint === "/books/get-books") {
-          const response = await axiosInstance.post(endpoint, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          if (response.data.success) {
-            setBooks(response.data.data);
-            setTotalBooks(response.data.totalCount);
-          } else {
-            message.error(response.data.message);
-          }
+        })
+
+        const response =
+          endpoint === "/books/get-books"
+            ? await axiosInstance.post(endpoint, formData, { headers: { "Content-Type": "multipart/form-data" } })
+            : await axiosInstance.get(endpoint)
+
+        if (response.data.success) {
+          setBooks(response.data.data)
+          setTotalBooks(response.data.totalCount)
         } else {
-          const response = await axiosInstance.get(endpoint);
-          if (response.data.success) {
-            setBooks(response.data.data);
-            setTotalBooks(response.data.totalCount);
-          } else {
-            message.error(response.data.message);
-          }
+          message.error(response.data.message)
         }
       } catch (error) {
-        message.error("Failed to fetch books");
+        message.error(error.message || "Failed to fetch books")
       }
-      setLoading(false);
-    };
+      setLoading(false)
+    }
 
     const fetchLovedBooks = async () => {
-      if (!auth.userId) return;
-
+      if (!auth.userId) return
       try {
-        const response = await axiosInstance.get(
-          `/loved-books/user/${auth.userId}`
-        );
-        if (response.data.success) {
-          setLovedBooks(response.data.data);
-        } else {
-          message.error(response.data.message);
-        }
-      } catch (error) {
-        message.error("Failed to fetch loved books");
+        const res = await axiosInstance.get(`/loved-books/user/${auth.userId}`)
+        if (res.data.success) setLovedBooks(res.data.data)
+        else message.error(res.data.message)
+      } catch (err) {
+        message.error(err.message || "Failed to fetch loved books")
       }
-    };
+    }
 
-    fetchBooks();
-    fetchLovedBooks();
-  }, [endpoint, auth.userId, searchParams]);
+    fetchBooks()
+    fetchLovedBooks()
+  }, [endpoint, auth.userId, searchParams])
 
   const handleSearchChange = (e) => {
-    const { name, value } = e.target;
-    debouncedSearch({ [name]: value });
-  };
+    const { name, value } = e.target
+    debouncedSearch({ [name]: value })
+  }
 
   const handlePageChange = (page, pageSize) => {
-    setSearchParams((prev) => ({
-      ...prev,
-      pageNumber: page,
-      pageSize: pageSize,
-    }));
-  };
+    setSearchParams((prev) => ({ ...prev, pageNumber: page, pageSize }))
+  }
 
   const handleLoveToggle = (bookId, loved) => {
-    const userId = auth.userId;
-    if (!userId) return message.error("Please login to love books");
-
+    if (!auth.userId) return message.error("Please login to love books")
     if (loved) {
       axiosInstance
-        .delete(`/loved-books/${userId}/${bookId}`)
-        .then((response) => {
-          if (response.data.success) {
-            setBooks((prevBooks) =>
-              prevBooks.map((book) =>
-                book.id === bookId
-                  ? { ...book, countLoved: book.countLoved - 1, loved: false }
-                  : book
-              )
-            );
-            setLovedBooks((prevLovedBooks) =>
-              prevLovedBooks.filter((book) => book.bookId !== bookId)
-            );
-            message.success("Book unloved successfully");
-          } else {
-            message.error(response.data.message);
-          }
+        .delete(`/loved-books/${auth.userId}/${bookId}`)
+        .then((res) => {
+          if (res.data.success) {
+            setBooks((prev) =>
+              prev.map((b) => (b.id === bookId ? { ...b, countLoved: b.countLoved - 1, loved: false } : b))
+            )
+            setLovedBooks((prev) => prev.filter((b) => b.bookId !== bookId))
+            message.success("Book unloved successfully")
+          } else message.error(res.data.message)
         })
-        .catch((error) => {
-          message.error("Failed to unlove book");
-        });
+        .catch((err) => message.error(err.message || "Failed to unlove book"))
     } else {
       axiosInstance
-        .post(`/loved-books`, { userId, bookId })
-        .then((response) => {
-          if (response.data.success) {
-            setBooks((prevBooks) =>
-              prevBooks.map((book) =>
-                book.id === bookId
-                  ? { ...book, countLoved: book.countLoved + 1, loved: true }
-                  : book
-              )
-            );
-            setLovedBooks((prevLovedBooks) => [
-              ...prevLovedBooks,
-              { bookId: bookId },
-            ]);
-            message.success("Book loved successfully");
-          } else {
-            message.error(response.data.message);
-          }
+        .post(`/loved-books`, { userId: auth.userId, bookId })
+        .then((res) => {
+          if (res.data.success) {
+            setBooks((prev) =>
+              prev.map((b) => (b.id === bookId ? { ...b, countLoved: b.countLoved + 1, loved: true } : b))
+            )
+            setLovedBooks((prev) => [...prev, { bookId }])
+            message.success("Book loved successfully")
+          } else message.error(res.data.message)
         })
-        .catch((error) => {
-          message.error("Failed to love book");
-        });
+        .catch((err) => message.error(err.message || "Failed to love book"))
     }
-  };
+  }
 
   const isBookLoved = (bookId) => {
-    if (!auth.userId) return false; // If user not authenticated, return false
-    return lovedBooks.some((lovedBook) => lovedBook.bookId === bookId);
-  };
+    return auth.userId && lovedBooks.some((b) => b.bookId === bookId)
+  }
 
   const addToCart = (cart) => {
-    const userId = auth.userId;
-    if (!userId) return message.error("Please login to love books");
+    if (!auth.userId) return message.error("Please login to add books to cart")
     axiosInstance
       .post(`/carts`, cart)
       .then((res) => {
-        if (res.data.success) {
-          message.success("Added to cart successfully");
-        } else {
-          message.warning("Book already in cart");
-        }
+        if (res.data.success) message.success("Added to cart successfully")
+        else message.warning("Book already in cart")
       })
-      .catch((error) => {
-        if (error.response.status === 409) {
-          message.warning("Book already in cart");
-        } else {
-          message.error("Failed to add to cart");
-        }
-      });
-  };
+      .catch((err) => {
+        if (err.response?.status === 409) message.warning("Book already in cart")
+        else message.error(err.message || "Failed to add to cart")
+      })
+  }
 
   return (
-    <Layout className="py-6 px-4 flex">
+    <Layout className="book-catalog-layout">
       {endpoint === "/books/get-books" && (
-        <div className="flex flex-col">
-          <Sider
-            width={200}
-            style={{
-              backgroundColor: "#f5f5f5",
-              marginRight: "16px",
-            }}
-          >
-            <Space
-              direction="vertical"
-              size="large"
-              style={{
-                backgroundColor: "rgb(229 231 235)",
-                padding: "16px",
-                borderRadius: "8px",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <Input
-                prefix={<FaSearch />}
-                placeholder="Search by Name...."
-                name="name"
-                onChange={handleSearchChange}
-              />
-              <Input
-                prefix={<FaRegUser />}
-                placeholder="Search by Author...."
-                name="author"
-                onChange={handleSearchChange}
-              />
-              <Input
-                prefix={<BiCategory />}
-                placeholder="Search by Category...."
-                name="categoryName"
-                onChange={handleSearchChange}
-              />
-              <Input
-                prefix={<FaCalendarAlt />}
-                placeholder="Release Year From"
-                name="releaseYearFrom"
-                type="number"
-                onChange={handleSearchChange}
-              />
-              <Input
-                prefix={<FaCalendarAlt />}
-                placeholder="Release Year To"
-                name="releaseYearTo"
-                type="number"
-                onChange={handleSearchChange}
-              />
-            </Space>
-          </Sider>
-          <div style={{ width: 200 }}>
-            <Pagination
-              current={searchParams.pageNumber}
-              pageSize={searchParams.pageSize}
-              total={totalBooks}
-              onChange={handlePageChange}
-            />
+        <Sider width={280} className="filter-sidebar" style={{ background: "transparent", padding: "20px 16px" }}>
+          <div className="filter-header">
+            <Title level={4} style={{ marginBottom: "24px" }}>Search Filters</Title>
           </div>
-        </div>
+          <Divider style={{ margin: "0 0 24px 0" }} />
+          <Space direction="vertical" size="large" style={{ width: "100%" }}>
+            <Input 
+              prefix={<FaSearch />} 
+              name="name" 
+              placeholder="Book name..." 
+              allowClear 
+              onChange={handleSearchChange}
+              size="large"
+              style={{ height: "42px" }}
+            />
+            <Input 
+              prefix={<FaRegUser />} 
+              name="author" 
+              placeholder="Author..." 
+              allowClear 
+              onChange={handleSearchChange}
+              size="large"
+              style={{ height: "42px" }}
+            />
+            <Input 
+              prefix={<BiCategory />} 
+              name="categoryName" 
+              placeholder="Category..." 
+              allowClear 
+              onChange={handleSearchChange}
+              size="large"
+              style={{ height: "42px" }}
+            />
+            <Input 
+              prefix={<FaCalendarAlt />} 
+              name="releaseYearFrom" 
+              placeholder="From year" 
+              type="number" 
+              allowClear 
+              onChange={handleSearchChange}
+              size="large"
+              style={{ height: "42px" }}
+            />
+            <Input 
+              prefix={<FaCalendarAlt />} 
+              name="releaseYearTo" 
+              placeholder="To year" 
+              type="number" 
+              allowClear 
+              onChange={handleSearchChange}
+              size="large"
+              style={{ height: "42px" }}
+            />
+          </Space>
+        </Sider>
       )}
+
       <Layout>
-        <Content>
+        <Content className="books-content" style={{ padding: "24px", background: "#f5f5f5" }}>
           {loading ? (
-            <div className="flex justify-center items-center">
-              <Spin size="large" />
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+              <Spin size="large" tip="Loading books..." />
             </div>
           ) : (
             <>
-              <Row gutter={[16, 16]}>
+              <Row gutter={[24, 32]}>
                 {books.map((book) => {
-                  const isLoved = isBookLoved(book.id);
+                  const loved = isBookLoved(book.id)
                   return (
-                    <Col key={book.id}>
+                    <Col key={book.id} xs={24} sm={12} md={8} lg={6} xl={4}>
                       <Card
                         hoverable
-                        className="w-60 h-100"
                         cover={
-                          <img
-                            alt={book.name}
-                            src={
-                              book.image || "https://via.placeholder.com/240"
-                            }
-                            className="h-40 object-cover"
-                            onClick={() => navigate(`/books/${book.id}`)}
-                          />
+                          <div onClick={() => navigate(`/books/${book.id}`)} style={{ height: "100px", overflow: "hidden" }}>
+                            <img 
+                              alt={book.name} 
+                              src={book.image || "https://via.placeholder.com/240"} 
+                              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                            />
+                          </div>
                         }
+                        actions={[
+                          <Tooltip title={loved ? "Unlove" : "Love"}>
+                            <FaHeart
+                              color={loved ? "red" : "gray"}
+                              onClick={() => handleLoveToggle(book.id, loved)}
+                            />
+                          </Tooltip>,
+                          <Tooltip title="Add to cart">
+                            <FaCartPlus
+                              onClick={() =>
+                                addToCart({ userId: auth.userId, bookId: book.id, quantity: 1 })
+                              }
+                            />
+                          </Tooltip>,
+                        ]}
                       >
-                        <Meta
-                          title={book.name}
+                        <Meta 
+                          title={<div style={{ height: "44px", overflow: "hidden" }}>{book.name}</div>} 
                           description={
-                            <div className="description">
-                              <p>Author: {book.author}</p>
-                              <p>Release Year: {book.releaseYear}</p>
-                              <p>Category: {book.categoryName}</p>
-                              <div className="flex justify-between">
-                                <p className="flex items-center">
-                                  <FaHeart
-                                    className={`inline mr-2 cursor-pointer ${
-                                      isLoved ? "text-red-500" : "text-gray-500"
-                                    } hover:text-red-400`}
-                                    onClick={() =>
-                                      handleLoveToggle(book.id, isLoved)
-                                    }
-                                  />
-                                  {book.countLoved}
-                                </p>
-                                <FaCartPlus
-                                  className="cursor-pointer text-gray-500 hover:text-blue-500"
-                                  onClick={() =>
-                                    addToCart({
-                                      userId: auth.userId,
-                                      bookId: book.id,
-                                      name: book.name,
-                                      author: book.author,
-                                      image: book.image,
-                                      daysForBorrow: book.daysForBorrow,
-                                    })
-                                  }
-                                />
+                            <div style={{ minHeight: "90px" }}>
+                              <div style={{ marginBottom: "6px" }}>
+                                <Text type="secondary">Author:</Text> {book.author}
                               </div>
-
-                              <Rate
-                                disabled
-                                defaultValue={book.averageRating}
-                              />
+                              <div style={{ marginBottom: "6px" }}>
+                                <Text type="secondary">Year:</Text> {book.releaseYear}
+                              </div>
+                              <div style={{ display: "flex", alignItems: "center" }}>
+                                <Text type="secondary" style={{ marginRight: "4px" }}>Category:</Text>
+                                <Tag color="green" style={{ maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                  {book.categoryName}
+                                </Tag>
+                              </div>
                             </div>
-                          }
+                          } 
                         />
                       </Card>
                     </Col>
-                  );
+                  )
                 })}
               </Row>
+              <div style={{ marginTop: "32px", textAlign: "center" }}>
+                <Pagination
+                  current={searchParams.pageNumber}
+                  pageSize={searchParams.pageSize}
+                  total={totalBooks}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                />
+              </div>
             </>
           )}
         </Content>
       </Layout>
     </Layout>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
