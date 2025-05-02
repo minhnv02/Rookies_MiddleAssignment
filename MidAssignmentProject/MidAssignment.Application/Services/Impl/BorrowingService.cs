@@ -34,6 +34,7 @@ namespace MidAssignment.Application.Services.Impl
             }
             var borrowing = new Borrowing
             {
+                ApproverId = "4aede4fef81f4e6b8633fe6d872e6152",
                 RequestorId = request.RequestorId,
                 CreatedAt = DateTime.Now,
                 Status = StatusBorrowing.WAITING,
@@ -42,6 +43,7 @@ namespace MidAssignment.Application.Services.Impl
                     BookId = b.BookId,
                     ReturnedAt = b.ReturnedAt,
                 }).ToList() ?? new List<BorrowingDetail>()
+
             };
 
             var borrowings = await _unitOfWork.BorrowingRepository.GetAllAsync(b => b.RequestorId == request.RequestorId && b.CreatedAt.Year == borrowing.CreatedAt.Year && b.CreatedAt.Month == borrowing.CreatedAt.Month);

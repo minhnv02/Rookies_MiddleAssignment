@@ -2,44 +2,26 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { AuthContext } from "../../../../contexts/AuthContext";
-import { message } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  Card,
+  Space,
+  message,
+} from "antd";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from "@ant-design/icons";
 
-// MUI Components
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  maxWidth: 400,
-  margin: 'auto',
-  marginTop: theme.spacing(2),
-  boxShadow: theme.shadows[3],
-  borderRadius: '8px',
-}));
+const { Title, Text, Link } = Typography;
 
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -60,131 +42,65 @@ const LoginForm = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Typography 
-        component="h1" 
-        variant="h4" 
-        align="center" 
-        sx={{ 
-          fontWeight: 'bold', 
-          mb: 2,
-          color: '#1976d2',
-          marginTop: 4
-        }}
-      >
+    <div style={{ maxWidth: 400, margin: "40px auto" }}>
+      <Title level={2} style={{ textAlign: "center", color: "#1677ff" }}>
         Library Management System
-      </Typography>
-      
-      <StyledPaper elevation={3}>
-        <Typography 
-          variant="h5" 
-          align="center" 
-          gutterBottom
-          sx={{ 
-            mb: 2,
-            fontWeight: 'bold',
-            backgroundColor: '#f5f5f5',
-            padding: '8px',
-            borderRadius: '4px',
-            color: '#333'
-          }}
-        >
+      </Title>
+
+      <Card bordered style={{ borderRadius: 8, boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <Title level={4} style={{ textAlign: "center" }}>
           Login
-        </Typography>
-        
-        <Typography 
-          variant="body1" 
-          align="center" 
-          color="text.secondary"
-          sx={{ mb: 4 }}
-        >
+        </Title>
+        <Text type="secondary" style={{ display: "block", textAlign: "center", marginBottom: 24 }}>
           Sign in to manage the book lending system
-        </Typography>
-        
-        <Box 
-          component="form" 
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            onFinish({
-              email: formData.get('email'),
-              password: formData.get('password')
-            });
-          }}
-        >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email *"
+        </Text>
+
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item
             name="email"
-            autoComplete="email"
-            autoFocus
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password *"
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            autoComplete="current-password"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ 
-              mt: 3, 
-              mb: 2, 
-              py: 1.5,
-              backgroundColor: '#1976d2',
-              fontSize: '1rem',
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#1565c0',
-              }
-            }}
-            disabled={loading}
+            label="Email"
+            rules={[
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Invalid email address!" },
+            ]}
           >
-            {loading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              'Login'
-            )}
-          </Button>
-          
-          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-            Don't have an account?{' '}
-            <Link href="/sign-up" color="primary" underline="hover">
-              Signup now
-            </Link>
-          </Typography>
-        </Box>
-      </StyledPaper>
-    </Container>
+            <Input placeholder="Enter your email" />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password
+              placeholder="Enter your password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              block
+              style={{ padding: "6px 0", fontSize: "16px" }}
+            >
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+
+        <Text type="secondary" style={{ display: "block", textAlign: "center" }}>
+          Don't have an account?{" "}
+          <Link href="/sign-up">
+            Signup now
+          </Link>
+        </Text>
+      </Card>
+    </div>
   );
 };
 

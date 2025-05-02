@@ -1,119 +1,82 @@
 import React from "react";
-import { Box, Container, Typography, Link, Divider, IconButton } from "@mui/material";
-import { Facebook, Twitter, Instagram, LinkedIn, GitHub } from "@mui/icons-material";
+import { Layout, Row, Col, Typography, Space } from "antd";
+import {
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  GithubOutlined,
+} from "@ant-design/icons";
 
-const Footer = () => {
+const { Footer } = Layout;
+const { Title, Paragraph, Text, Link } = Typography;
+
+const AppFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: (theme) => theme.palette.grey[100],
-        py: 6,
-        mt: "auto",
-        fontSize: "0.9rem",
-      }}
-    >
-      <Container maxWidth="lg">
-        {/* Top sections */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            justifyContent: "space-evenly",
-            textAlign: { xs: "center", md: "left" },
-            gap: { xs: 5, md: 10 },
-            mb: 4,
-          }}
-        >
-          {/* About */}
-          <Box sx={{ maxWidth: 300 }}>
-            <Typography variant="h6" color="primary" gutterBottom>
-              Library Management System
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Your complete solution for managing library resources, borrowing books, and discovering new reading materials.
-            </Typography>
-          </Box>
+    <Footer style={{ backgroundColor: "#f0f2f5", padding: "48px 24px", fontSize: "0.9rem" }}>
+      <Row gutter={[32, 32]} justify="space-evenly">
+        {/* About */}
+        <Col xs={24} md={8}>
+          <Title level={5} style={{ color: "#1677ff" }}>
+            Library Management System
+          </Title>
+          <Paragraph type="secondary">
+            Your complete solution for managing library resources, borrowing books, and discovering new reading materials.
+          </Paragraph>
+        </Col>
 
-          {/* Quick Links */}
-          <Box sx={{ maxWidth: 150 }}>
-            <Typography variant="h6" color="primary" gutterBottom>
-              Quick Links
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              {["Home", "About Us", "Services", "Contact"].map((item, index) => (
-                <Link 
-                  key={index}
-                  href="#"
-                  color="text.secondary"
-                  underline="hover"
-                  sx={{
-                    fontSize: "0.9rem",
-                    "&:hover": { color: "primary.main" },
-                  }}
-                >
-                  {item}
-                </Link>
-              ))}
-            </Box>
-          </Box>
+        {/* Quick Links */}
+        <Col xs={24} md={4}>
+          <Title level={5} style={{ color: "#1677ff" }}>
+            Quick Links
+          </Title>
+          <Space direction="vertical">
+            {["Home", "About Us", "Services", "Contact"].map((item, index) => (
+              <Link key={index} href="#" style={{ color: "rgba(0,0,0,0.65)" }}>
+                {item}
+              </Link>
+            ))}
+          </Space>
+        </Col>
 
-          {/* Contact */}
-          <Box sx={{ maxWidth: 250 }}>
-            <Typography variant="h6" color="primary" gutterBottom>
-              Contact Us
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              123 Library Street, Book City
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Email: info@library.com
-            </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Phone: (123) 456-7890
-            </Typography>
+        {/* Contact */}
+        <Col xs={24} md={8}>
+          <Title level={5} style={{ color: "#1677ff" }}>
+            Contact Us
+          </Title>
+          <Paragraph type="secondary">123 Library Street, Book City</Paragraph>
+          <Paragraph type="secondary">Email: info@library.com</Paragraph>
+          <Paragraph type="secondary">Phone: (123) 456-7890</Paragraph>
 
-            <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" }, gap: 1, mt: 1 }}>
-              {[Facebook, Twitter, Instagram, LinkedIn, GitHub].map((Icon, idx) => (
-                <IconButton key={idx} color="primary" size="small" sx={{ p: 0.5 }}>
-                  <Icon fontSize="small" />
-                </IconButton>
-              ))}
-            </Box>
-          </Box>
-        </Box>
+          <Space>
+            <Link href="#"><FacebookOutlined style={{ fontSize: "18px", color: "#1677ff" }} /></Link>
+            <Link href="#"><TwitterOutlined style={{ fontSize: "18px", color: "#1677ff" }} /></Link>
+            <Link href="#"><InstagramOutlined style={{ fontSize: "18px", color: "#1677ff" }} /></Link>
+            <Link href="#"><LinkedinOutlined style={{ fontSize: "18px", color: "#1677ff" }} /></Link>
+            <Link href="#"><GithubOutlined style={{ fontSize: "18px", color: "#1677ff" }} /></Link>
+          </Space>
+        </Col>
+      </Row>
 
-        <Divider sx={{ my: 4 }} />
+      {/* Divider */}
+      <div style={{ borderTop: "1px solid #e8e8e8", margin: "32px 0" }} />
 
-        {/* Bottom */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            justifyContent: "space-between",
-            alignItems: "center",
-            textAlign: { xs: "center", md: "left" },
-            gap: 2,
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            © {currentYear} Library Management System. All rights reserved.
-          </Typography>
-
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Link href="#" color="text.secondary" underline="hover" sx={{ "&:hover": { color: "primary.main" } }}>
-              Privacy Policy
-            </Link>
-            <Link href="#" color="text.secondary" underline="hover" sx={{ "&:hover": { color: "primary.main" } }}>
-              Terms of Service
-            </Link>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+      {/* Bottom Section */}
+      <Row justify="space-between" align="middle">
+        <Col xs={24} md="auto" style={{ textAlign: "center" }}>
+          <Text type="secondary">© {currentYear} Library Management System. All rights reserved.</Text>
+        </Col>
+        <Col xs={24} md="auto" style={{ textAlign: "center", marginTop: 8 }}>
+          <Space>
+            <Link href="#" style={{ color: "rgba(0,0,0,0.65)" }}>Privacy Policy</Link>
+            <Link href="#" style={{ color: "rgba(0,0,0,0.65)" }}>Terms of Service</Link>
+          </Space>
+        </Col>
+      </Row>
+    </Footer>
   );
 };
 
-export default Footer;
+export default AppFooter;

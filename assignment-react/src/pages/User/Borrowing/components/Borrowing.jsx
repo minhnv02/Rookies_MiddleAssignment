@@ -1,3 +1,4 @@
+// Borrowing.jsx
 import React, { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../../../utils/axiosInstance";
 import { AuthContext } from "../../../../contexts/AuthContext";
@@ -23,7 +24,7 @@ const Borrowing = () => {
           message.error(response.data.message);
         }
       } catch (err) {
-        if (err.response.status === 404) {
+        if (err.response?.status === 404) {
           message.warning("No borrowing data");
         } else {
           message.error(err.message);
@@ -38,6 +39,7 @@ const Borrowing = () => {
   const handleFilterChange = (value) => {
     setFilterStatus(value);
   };
+  
   const filteredData =
     filterStatus === "All"
       ? borrowingData
@@ -89,37 +91,39 @@ const Borrowing = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => {
-        return text === "Pending" ? (
-          <div className="text-yellow-500">{text}</div>
-        ) : text === "Approved" ? (
-          <div className="text-green-500">{text}</div>
-        ) : (
-          <div className="text-red-500">{text}</div>
-        );
+        const statusStyles = {
+          Waiting: "text-yellow-500 font-medium",
+          Pending: "text-yellow-500 font-medium", // Added Pending status
+          Approved: "text-green-500 font-medium",
+          Rejected: "text-red-500 font-medium"
+        };
+        
+        const statusClass = statusStyles[text] || "";
+        return <div className={statusClass}>{text}</div>;
       },
     },
     {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => (
-        <div>
-          {record.status === "Pending" ? (
+        <div className="flex gap-2">
+          {(record.status === "Waiting" || record.status === "Pending") ? (
             <>
-              <Button className="bg-green-400 text-white">
+              <Button className="bg-green-500 text-white hover:bg-green-600 hover:text-white border-0 rounded">
                 <Link to={`/borrowing/${record.id}`}>Detail</Link>
               </Button>
-              <Button className="bg-blue-500 text-white">
+              <Button className="bg-blue-500 text-white hover:bg-blue-600 hover:text-white border-0 rounded">
                 <Link to={`/borrowing/${record.id}`}>Edit</Link>
               </Button>
               <Button
                 onClick={() => handleCancel(record.id)}
-                className="bg-red-500 text-white"
+                className="bg-red-500 text-white hover:bg-red-600 hover:text-white border-0 rounded"
               >
                 Cancel
               </Button>
             </>
           ) : (
-            <Button className="bg-green-400 text-white">
+            <Button className="bg-green-500 text-white hover:bg-green-600 hover:text-white border-0 rounded">
               <Link to={`/borrowing/${record.id}`}>Detail</Link>
             </Button>
           )}
@@ -129,20 +133,23 @@ const Borrowing = () => {
   ];
 
   return (
-    <div>
+    <div className="bg-white p-6 rounded-lg shadow-md">
       {loading ? (
-        <Spin size="large" className="flex justify-center items-center" />
+        <div className="flex justify-center items-center h-60">
+          <Spin size="large" />
+        </div>
       ) : (
         <>
-          <h1 className="text-2xl p-4">History borrowing</h1>
-          <div className="flex mb-4">
+          <h1 className="text-2xl font-semibold text-gray-800 mb-6">History Borrowing</h1>
+          <div className="mb-6">
             <Select
               defaultValue="All"
               onChange={handleFilterChange}
-              style={{ width: 150 }}
+              style={{ width: 180 }}
+              className="border rounded"
             >
               <Select.Option value="All">All</Select.Option>
-              <Select.Option value="Pending">Pending</Select.Option>
+              <Select.Option value="Waiting">Waiting</Select.Option>
               <Select.Option value="Approved">Approved</Select.Option>
               <Select.Option value="Rejected">Rejected</Select.Option>
             </Select>
@@ -150,7 +157,14 @@ const Borrowing = () => {
           <Table
             columns={columns}
             dataSource={filteredData}
+            rowKey="id"
             scroll={{ y: 500 }}
+            className="border rounded-lg"
+            pagination={{
+              pageSize: 10,
+              position: ["bottomCenter"],
+              showSizeChanger: false,
+            }}
           />
         </>
       )}
@@ -159,3 +173,4 @@ const Borrowing = () => {
 };
 
 export default Borrowing;
+

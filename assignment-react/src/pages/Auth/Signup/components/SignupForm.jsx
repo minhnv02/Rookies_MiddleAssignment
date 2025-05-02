@@ -1,53 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../utils/axiosInstance";
-import { message } from "antd";
+import { Form, Input, Button, Typography, message, Card, Spin } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
-// MUI Components
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  maxWidth: 400,
-  margin: 'auto',
-  marginTop: theme.spacing(2),
-  boxShadow: theme.shadows[3],
-  borderRadius: '8px',
-}));
+const { Title, Text, Link } = Typography;
 
 const SignupForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleClickShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/auths/register", values);
+      const response = await axiosInstance.post("/auths/register", {
+        ...values,
+        roleId: 2,
+      });
       const email = response.data.data.email;
       await axiosInstance.get(`/auths/request-active-account/${email}`);
       message.success(response.data.message);
@@ -63,167 +32,106 @@ const SignupForm = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Typography 
-        component="h1" 
-        variant="h4" 
-        align="center" 
-        sx={{ 
-          fontWeight: 'bold', 
-          mb: 2,
-          color: '#1976d2',
-          marginTop: 4
-        }}
-      >
+    <div style={{ maxWidth: 400, margin: "40px auto" }}>
+      <Title level={2} style={{ textAlign: "center", color: "#1677ff" }}>
         Library Management System
-      </Typography>
-      
-      <StyledPaper elevation={3}>
-        <Typography 
-          variant="h5" 
-          align="center" 
-          gutterBottom
-          sx={{ 
-            mb: 2,
-            fontWeight: 'bold',
-            backgroundColor: '#f5f5f5',
-            padding: '8px',
-            borderRadius: '4px',
-            color: '#333'
-          }}
-        >
+      </Title>
+
+      <Card bordered style={{ borderRadius: 8 }}>
+        <Title level={4} style={{ textAlign: "center", marginBottom: 24 }}>
           Sign Up
-        </Typography>
-        
-        <Box 
-          component="form" 
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            onFinish({
-              email: formData.get('email'),
-              name: formData.get('name'),
-              password: formData.get('password'),
-              confirmPassword: formData.get('confirmPassword'),
-              roleId: 2
-            });
-          }}
-        >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email *"
+        </Title>
+
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item
             name="email"
-            autoComplete="email"
-            autoFocus
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name *"
-            name="name"
-            autoComplete="name"
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password *"
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            autoComplete="new-password"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            helperText="Password must be at least 8 characters with uppercase, lowercase, number and special character"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm Password *"
-            type={showConfirmPassword ? 'text' : 'password'}
-            id="confirmPassword"
-            autoComplete="new-password"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle confirm password visibility"
-                    onClick={handleClickShowConfirmPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          
-          <input type="hidden" name="roleId" value={2} />
-          
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ 
-              mt: 3, 
-              mb: 2, 
-              py: 1.5,
-              backgroundColor: '#1976d2',
-              fontSize: '1rem',
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#1565c0',
-              }
-            }}
-            disabled={loading}
+            label="Email"
+            rules={[
+              { required: true, message: "Please input your email!" },
+              { type: "email", message: "Invalid email format" },
+            ]}
           >
-            {loading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              'Sign Up'
-            )}
-          </Button>
-          
-          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-            Already have an account?{' '}
-            <Link href="/login" color="primary" underline="hover">
+            <Input placeholder="Enter your email" />
+          </Form.Item>
+
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please input your name!" }]}
+          >
+            <Input placeholder="Enter your name" />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              { required: true, message: "Please input your password!" },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                message:
+                  "Password must be at least 8 characters with uppercase, lowercase, number and special character",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password
+              placeholder="Enter your password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="confirmPassword"
+            label="Confirm Password"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              { required: true, message: "Please confirm your password!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Passwords do not match!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              placeholder="Confirm your password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              style={{ height: 40, fontSize: 16 }}
+              disabled={loading}
+            >
+              {loading ? <Spin size="small" /> : "Sign Up"}
+            </Button>
+          </Form.Item>
+
+          <Text style={{ display: "block", textAlign: "center" }}>
+            Already have an account?{" "}
+            <Link href="/login" style={{ color: "#1677ff" }}>
               Login now
             </Link>
-          </Typography>
-        </Box>
-      </StyledPaper>
-    </Container>
+          </Text>
+        </Form>
+      </Card>
+    </div>
   );
 };
 

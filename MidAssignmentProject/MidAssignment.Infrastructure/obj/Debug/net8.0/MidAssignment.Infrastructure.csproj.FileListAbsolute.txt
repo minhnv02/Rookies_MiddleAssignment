@@ -15,6 +15,7 @@ F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentPro
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssig.95B71E75.Up2Date
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Infrastructure\bin\Debug\net8.0\MidAssignment.Infrastructure.runtimeconfig.json
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.genruntimeconfig.cache
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\bin\Debug\net8.0\appsettings.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\bin\Debug\net8.0\MidAssignment.Infrastructure.deps.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\bin\Debug\net8.0\MidAssignment.Infrastructure.runtimeconfig.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\bin\Debug\net8.0\MidAssignment.Infrastructure.dll
@@ -26,6 +27,7 @@ F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.I
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.AssemblyInfoInputs.cache
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.AssemblyInfo.cs
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.csproj.CoreCompileInputs.cache
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.sourcelink.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssig.95B71E75.Up2Date
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\MidAssignment.Infrastructure.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Infrastructure\obj\Debug\net8.0\refint\MidAssignment.Infrastructure.dll

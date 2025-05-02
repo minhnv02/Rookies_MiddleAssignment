@@ -18,6 +18,7 @@ F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.D
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.AssemblyInfoInputs.cache
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.AssemblyInfo.cs
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.csproj.CoreCompileInputs.cache
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.sourcelink.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\refint\MidAssignment.Domain.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Domain\obj\Debug\net8.0\MidAssignment.Domain.pdb

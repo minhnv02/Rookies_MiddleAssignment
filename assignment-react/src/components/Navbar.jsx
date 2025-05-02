@@ -1,28 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import { Layout, Menu, Button, Typography, Space } from "antd";
+import {
+  HomeOutlined,
+  ShoppingCartOutlined,
+  LoginOutlined,
+  UserAddOutlined,
+  LogoutOutlined
+} from "@ant-design/icons";
 
-// MUI Components
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+const { Header } = Layout;
+const { Title } = Typography;
 
-// Icons
-import { FaCartPlus } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
-import { FaSignInAlt } from "react-icons/fa";
-import { FaUserPlus } from "react-icons/fa";
-const Navbar = ({ isAuthenticated, role }) => {
+const Navbar = () => {
+  const { auth, isAuthen, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/home");
+  };
+
   const userItems = [
-    { label: "Home", path: "/home", icon: <FaHome style={{ marginRight: 8 }} /> },
+    { label: "Home", path: "/home", icon: <HomeOutlined /> },
     { label: "Top 10 New", path: "/books/top10news" },
     { label: "Borrowing", path: "/borrowing" },
   ];
 
   const guestItems = [
-    { label: "Home", path: "/home", icon: <FaHome style={{ marginRight: 8 }} /> },
+    { label: "Home", path: "/home", icon: <HomeOutlined /> },
     { label: "Top 10 New", path: "/books/top10news" },
   ];
 
@@ -33,130 +40,81 @@ const Navbar = ({ isAuthenticated, role }) => {
     { label: "Borrowing Extend", path: "/admin/borrowing-extend" },
   ];
 
-  const renderMenuItems = (items) => (
-    items.map((item, index) => (
-      <Button
-        key={index}
-        color="inherit"
-        component={Link}
-        to={item.path}
-        sx={{ 
-          mx: 1,
-          textTransform: 'none',
-          fontSize: '1rem',
-          fontWeight: 'normal',
-          color: 'inherit',
-          '&:hover': {
-            backgroundColor: 'transparent',
-            textDecoration: 'underline'
-          }
-        }}
-        startIcon={item.icon || null}
-      >
-        {item.label}
-      </Button>
-    ))
-  );
+  const renderMenuItems = (items) =>
+    items.map((item, index) => ({
+      key: index,
+      icon: item.icon || null,
+      label: <Link to={item.path}>{item.label}</Link>,
+    }));
+
+  const menuItems =
+    auth.role === "user"
+      ? renderMenuItems(userItems)
+      : auth.role === "admin"
+      ? renderMenuItems(adminItems)
+      : renderMenuItems(guestItems);
 
   return (
-    <AppBar position="sticky" color="default" elevation={2}>
-      <Toolbar sx={{ 
-        display: 'flex', 
-        justifyContent: 'space-between',
-        padding: '0.5rem 2rem'
-      }}>
-        <Box display="flex" alignItems="center">
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <img src="/logo.png" alt="logo" style={{ width: 50, height: 50 }} />
-            <Typography 
-              variant="h6" 
-              component="div" 
-              sx={{ 
-                ml: 2,
-                fontWeight: 'bold',
-                color: '#1976d2'
-              }}
-            >
-              Library Management System
-            </Typography>
+    <Header style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <Link to="/" style={{ display: "flex", alignItems: "center" }}>
+        <img src="/logo.png" alt="logo" style={{ width: 50, height: 50 }} />
+        <Title level={4} style={{ margin: "0 0 0 16px", color: "#fff" }}>
+          Library Management System
+        </Title>
+      </Link>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        items={menuItems}
+        style={{ flex: 1, justifyContent: "center" }}
+      />
+      <Space>
+        {isAuthen && auth.role === "user" && (
+          <Link to="/cart">
+            <Button icon={<ShoppingCartOutlined />} type="text" style={{ color: "#fff" }} />
           </Link>
-        </Box>
-
-        <Box display="flex" flexGrow={1} justifyContent="center">
-          {role === "user"
-            ? renderMenuItems(userItems)
-            : role === "admin"
-            ? renderMenuItems(adminItems)
-            : renderMenuItems(guestItems)
-          }
-        </Box>
-
-        <Box display="flex" alignItems="center" gap={2}>
-          {isAuthenticated && role === "user" && (
-            <IconButton color="inherit" component={Link} to="/cart">
-              <FaCartPlus />
-            </IconButton>
-          )}
-          
-          {isAuthenticated ? (
+        )}
+        {auth.role === "user" ? (
+          <>
+            <Link to="/profile">
+              <Button type="text" style={{ color: "#fff" }}>
+                Profile
+              </Button>
+            </Link>
             <Button 
-              color="inherit"
-              component={Link}
-              to="/profile"
-              sx={{
-                textTransform: 'none',
-                fontSize: '1rem'
-              }}
+              icon={<LogoutOutlined />} 
+              type="text" 
+              style={{ color: "#fff" }} 
+              onClick={handleLogout}
             >
-              Profile
+              Logout
             </Button>
-          ) : (
-            <>
-              <Button 
-                color="inherit" 
-                component={Link} 
-                to="/login"
-                startIcon={<FaSignInAlt />}
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  padding: '0.5rem 1.5rem',
-                  borderRadius: '4px',
-                  border: '1px solid #1976d2',
-                  color: '#1976d2',
-                  '&:hover': {
-                    backgroundColor: 'rgba(25, 118, 210, 0.04)',
-                    border: '1px solid #1976d2'
-                  }
-                }}
-              >
+          </>
+        ) : auth.role === "admin" ? (
+          <Button 
+            icon={<LogoutOutlined />} 
+            type="text" 
+            style={{ color: "#fff" }} 
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        ) : (
+          <>
+            <Link to="/login">
+              <Button icon={<LoginOutlined />} type="text" style={{ color: "#fff" }}>
                 Login
               </Button>
-              <Button 
-                color="primary" 
-                variant="contained" 
-                component={Link} 
-                to="/sign-up"
-                startIcon={<FaUserPlus />}
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  padding: '0.5rem 1.5rem',
-                  borderRadius: '4px',
-                  boxShadow: 'none',
-                  '&:hover': {
-                    backgroundColor: '#1565c0',
-                    boxShadow: 'none'
-                  }
-                }}
-              >
+            </Link>
+            <Link to="/sign-up">
+              <Button icon={<UserAddOutlined />} type="primary">
                 Sign Up
               </Button>
-            </>
-          )}
-        </Box>
-      </Toolbar>
-    </AppBar>
+            </Link>
+          </>
+        )}
+      </Space>
+    </Header>
   );
 };
 

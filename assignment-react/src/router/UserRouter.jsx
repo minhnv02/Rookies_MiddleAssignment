@@ -4,7 +4,6 @@ import RequireUser from "../components/RequireUser";
 import BorrowingPage from "../pages/User/Borrowing/BorrowingPage";
 import BorrowingDetailPage from "../pages/User/Borrowing/BorrowingDetailPage";
 import Profile from "../pages/User/Profile";
-import NotFound from "../components/NotFound";
 
 const UserRouter = [
   {

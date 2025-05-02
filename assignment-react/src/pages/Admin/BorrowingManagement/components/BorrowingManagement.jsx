@@ -135,7 +135,7 @@ const BorrowingManagement = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => {
-        return text === "Pending" ? (
+        return text === "Waiting" ? (
           <div className="text-yellow-500">{text}</div>
         ) : text === "Approved" ? (
           <div className="text-green-500">{text}</div>
@@ -149,7 +149,7 @@ const BorrowingManagement = () => {
       dataIndex: "action",
       render: (text, record) => (
         <div>
-          {record.status === "Pending" ? (
+          {record.status === "Waiting" ? (
             <>
               <Button
                 className="bg-green-400 text-white"
@@ -191,7 +191,7 @@ const BorrowingManagement = () => {
               style={{ width: 150 }}
             >
               <Select.Option value="All">All</Select.Option>
-              <Select.Option value="Pending">Pending</Select.Option>
+              <Select.Option value="Waiting">Waiting</Select.Option>
               <Select.Option value="Approved">Approved</Select.Option>
               <Select.Option value="Rejected">Rejected</Select.Option>
             </Select>

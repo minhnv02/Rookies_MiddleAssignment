@@ -20,8 +20,15 @@ const BorrowingDetail = () => {
       .get(`/borrowings/${id}`)
       .then((res) => {
         if (res.data.success) {
-          setBorrowingData(res.data.data);
-          setIsApprover(res.data.data.status === "Approved");
+          const data = res.data.data;
+          
+          // Normalize the status to handle both "Waiting" and "Pending"
+          if (data.status === "Pending") {
+            data.status = "Waiting"; // Convert Pending to Waiting for consistency
+          }
+          
+          setBorrowingData(data);
+          setIsApprover(data.status === "Approved");
         } else {
           message.error(res.data.message);
         }
@@ -61,7 +68,16 @@ const BorrowingDetail = () => {
       .get(`/borrowing-details/borrowing/${id}`)
       .then((res) => {
         if (res.data.success) {
-          setBorrowingDetailData(res.data.data);
+          // Normalize status values in the data - important fix!
+          const normalizedData = res.data.data.map(item => {
+            // Convert "Pending" to "Waiting" for consistency
+            if (item.status === "Pending") {
+              return { ...item, status: "Waiting" };
+            }
+            return item;
+          });
+          
+          setBorrowingDetailData(normalizedData);
         } else {
           message.error(res.data.message);
         }
@@ -102,7 +118,7 @@ const BorrowingDetail = () => {
   const handleExtend = (bookId) => {
     axiosInstance
       .put(`/borrowing-details/update-status-extend/${id}/${bookId}`, {
-        statusExtend: "Pending",
+        statusExtend: "Waiting",
       })
       .then((res) => {
         if (res.data.success) {
@@ -110,7 +126,7 @@ const BorrowingDetail = () => {
           setBorrowingDetailData(
             borrowingDetailData.map((detail) =>
               detail.bookId === bookId
-                ? { ...detail, statusExtend: "Pending" }
+                ? { ...detail, statusExtend: "Waiting" }
                 : detail
             )
           );
@@ -161,13 +177,22 @@ const BorrowingDetail = () => {
   };
 
   const columns = [
-    { title: "Book Name", dataIndex: "bookName", key: "bookName" },
+    { 
+      title: "Book Name", 
+      dataIndex: "bookName", 
+      key: "bookName",
+      className: "font-semibold",
+    },
     {
       title: "Image",
       dataIndex: "imageUrl",
       key: "imageUrl",
       render: (text) => (
-        <img src={text} alt="Book" style={{ width: "100px", height: "60px" }} />
+        <img 
+          src={text} 
+          alt="Book" 
+          style={{ width: "100px", height: "70px", objectFit: "cover", borderRadius: "4px" }} 
+        />
       ),
     },
     {
@@ -205,15 +230,17 @@ const BorrowingDetail = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => {
-        return text === "Pending" ? (
-          <div className="text-yellow-500">{text}</div>
-        ) : text === "Borrowing" ? (
-          <div className="text-blue-500">{text}</div>
-        ) : text === "Returned" ? (
-          <div className="text-green-500">{text}</div>
-        ) : (
-          <div className="text-red-500">{text}</div>
-        );
+        if (text === "Waiting") {
+          return <div style={{ color: "#faad14", fontWeight: "bold" }}>{text}</div>;
+        } else if (text === "Pending") {
+          return <div style={{ color: "#faad14", fontWeight: "bold" }}>Waiting</div>;
+        } else if (text === "Borrowing") {
+          return <div style={{ color: "#1890ff", fontWeight: "bold" }}>{text}</div>;
+        } else if (text === "Returned") {
+          return <div style={{ color: "#52c41a", fontWeight: "bold" }}>{text}</div>;
+        } else {
+          return <div style={{ color: "#ff4d4f", fontWeight: "bold" }}>{text}</div>;
+        }
       },
     },
     {
@@ -221,88 +248,119 @@ const BorrowingDetail = () => {
       dataIndex: "statusExtend",
       key: "statusExtend",
       render: (text) => {
-        return text === "Pending" ? (
-          <div className="text-yellow-500">{text}</div>
-        ) : text === "Approved" ? (
-          <div className="text-green-500">{text}</div>
-        ) : (
-          <div className="text-red-500">{text}</div>
-        );
+        if (!text) return <div>-</div>;
+        
+        if (text === "Waiting") {
+          return <div style={{ color: "#faad14", fontWeight: "bold" }}>{text}</div>;
+        } else if (text === "Pending") {
+          return <div style={{ color: "#faad14", fontWeight: "bold" }}>Waiting</div>;
+        } else if (text === "Approved") {
+          return <div style={{ color: "#52c41a", fontWeight: "bold" }}>{text}</div>;
+        } else {
+          return <div style={{ color: "#ff4d4f", fontWeight: "bold" }}>{text}</div>;
+        }
       },
     },
     {
       title: "Action",
       dataIndex: "action",
-      render: (text, record) => (
-        <div>
-          {record.status === "Pending" &&
-            borrowingData.status === "Pending" &&
-            borrowingDetailData.length > 1 && (
-              <Button
-                onClick={() => handleDelete(record.bookId)}
-                className="bg-red-500 text-white"
-              >
-                Delete
-              </Button>
-            )}
-          {record.status === "Borrowing" &&
-            isApprover &&
-            !record.statusExtend && (
-              <Button
-                onClick={() => handleExtend(record.bookId)}
-                className="bg-blue-500 text-white"
-              >
-                Extend
-              </Button>
-            )}
-        </div>
-      ),
+      key: "action",
+      render: (text, record) => {
+        // Always show Delete button if only one condition is true: record status is Waiting
+        if (record.status === "Waiting" && borrowingDetailData.length > 1) {
+          return (
+            <Button
+              onClick={() => handleDelete(record.bookId)}
+              style={{ 
+                backgroundColor: "#ff4d4f", 
+                color: "white", 
+                border: "none",
+                borderRadius: "4px",
+                marginRight: "8px"
+              }}
+            >
+              Delete
+            </Button>
+          );
+        }
+        
+        // For Borrowing status with approver permissions
+        if (record.status === "Borrowing" && isApprover && !record.statusExtend) {
+          return (
+            <Button
+              onClick={() => handleExtend(record.bookId)}
+              style={{ 
+                backgroundColor: "#1890ff", 
+                color: "white", 
+                border: "none",
+                borderRadius: "4px" 
+              }}
+            >
+              Extend
+            </Button>
+          );
+        }
+        
+        return null;
+      },
     },
   ];
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl">Borrowing Detail</h1>
+    <div style={{ background: "white", padding: "24px", borderRadius: "8px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+      <h1 style={{ fontSize: "24px", fontWeight: "600", marginBottom: "16px" }}>Borrowing Detail</h1>
       {loading ? (
-        <Spin size="large" className="flex justify-center items-center" />
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "240px" }}>
+          <Spin size="large" />
+        </div>
       ) : (
         <>
-          {borrowingData.status !== "Pending" &&
+          {borrowingData && borrowingData.status !== "Waiting" &&
             borrowingData.status !== "Rejected" && (
-              <h2 className="text-xl mt-4 mb-2">
-                <strong>Requestor handler:</strong> {borrowingData.approverName}
+              <h2 style={{ fontSize: "16px", marginBottom: "16px" }}>
+                <span style={{ fontWeight: "600" }}>Requestor handler:</span> {borrowingData.approverName}
               </h2>
             )}
-          <h2 className="text-xl mt-4 mb-2">
-            <strong>Status of borrowing: </strong>
-            {borrowingData.status === "Pending" ? (
-              <div className="text-yellow-500 inline">
-                {borrowingData.status}
-              </div>
-            ) : borrowingData.status === "Approved" ? (
-              <div className="text-green-500 inline">
-                {borrowingData.status}
-              </div>
-            ) : (
-              <div className="text-red-500 inline">{borrowingData.status}</div>
+          <h2 style={{ fontSize: "16px", marginBottom: "24px" }}>
+            <span style={{ fontWeight: "600" }}>Status of borrowing: </span>
+            {borrowingData && (
+              borrowingData.status === "Waiting" ? (
+                <span style={{ color: "#faad14", fontWeight: "bold" }}>{borrowingData.status}</span>
+              ) : borrowingData.status === "Approved" ? (
+                <span style={{ color: "#52c41a", fontWeight: "bold" }}>{borrowingData.status}</span>
+              ) : (
+                <span style={{ color: "#ff4d4f", fontWeight: "bold" }}>{borrowingData.status}</span>
+              )
             )}
           </h2>
-          <Table
-            columns={columns}
-            dataSource={borrowingDetailData}
-            rowKey="id"
-            scroll={{ y: 300 }}
-            pagination={false}
-          />
-          {borrowingData.status === "Pending" &&
+          <div style={{ marginBottom: "24px" }}>
+            <Table
+              columns={columns}
+              dataSource={borrowingDetailData}
+              rowKey={(record) => `${record.bookId}-${record.id}`}
+              pagination={false}
+              style={{ border: "1px solid #f0f0f0", borderRadius: "8px" }}
+            />
+          </div>
+          
+          {borrowingData && (borrowingData.status === "Waiting" || borrowingData.status === "Pending") &&
             borrowingDetailData.length < 5 && (
-              <div className="mt-4">
+              <div style={{ 
+                marginTop: "24px", 
+                marginBottom: "24px", 
+                padding: "16px", 
+                background: "#f9f9f9", 
+                borderRadius: "8px",
+                border: "1px solid #f0f0f0"
+              }}>
+                <h3 style={{ fontSize: "18px", fontWeight: "500", marginBottom: "12px" }}>Add More Books</h3>
                 <Select
                   mode="multiple"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", marginBottom: "12px" }}
                   placeholder="Select books to add"
                   value={selectedBooks}
                   onChange={handleBookSelection}
+                  maxTagCount={3}
                 >
                   {bookDataNotInBorrowing.map((book) => (
                     <Select.Option key={book.id} value={book.id}>
@@ -311,7 +369,12 @@ const BorrowingDetail = () => {
                   ))}
                 </Select>
                 <Button
-                  className="bg-blue-500 text-white mt-2"
+                  style={{ 
+                    backgroundColor: "#1890ff", 
+                    color: "white", 
+                    border: "none",
+                    borderRadius: "4px"
+                  }}
                   onClick={handleSave}
                   disabled={
                     selectedBooks.length === 0 ||
@@ -323,7 +386,12 @@ const BorrowingDetail = () => {
               </div>
             )}
           <Button
-            className="bg-blue-500 text-white mt-4"
+            style={{ 
+              backgroundColor: "#1890ff", 
+              color: "white", 
+              border: "none",
+              borderRadius: "4px"
+            }}
             onClick={() => navigate(-1)}
           >
             Back

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-
+//lỗi luôn khi gõ thẳng link nếu dùng UseEffect kiểu này
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

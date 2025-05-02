@@ -15,6 +15,7 @@ F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentPro
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\refint\MidAssignment.Application.dll
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.pdb
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\ref\MidAssignment.Application.dll
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\bin\Debug\net8.0\appsettings.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\bin\Debug\net8.0\MidAssignment.Application.deps.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\bin\Debug\net8.0\MidAssignment.Application.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\bin\Debug\net8.0\MidAssignment.Application.pdb
@@ -27,6 +28,7 @@ F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.A
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.AssemblyInfoInputs.cache
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.AssemblyInfo.cs
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.csproj.CoreCompileInputs.cache
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.sourcelink.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssig.C9E66918.Up2Date
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\MidAssignment.Application.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignment.Application\obj\Debug\net8.0\refint\MidAssignment.Application.dll

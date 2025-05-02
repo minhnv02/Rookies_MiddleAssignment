@@ -1,6 +1,7 @@
 ﻿using MidAssignment.Domain.Entities;
-using MidAssignment.Infrastructure.DataAccess;
 using MidAssignment.Domain.Interfaces;
+using MidAssignment.Infrastructure.DataAccess;
+
 
 namespace MidAssignment.Infrastructure.Repositories
 {

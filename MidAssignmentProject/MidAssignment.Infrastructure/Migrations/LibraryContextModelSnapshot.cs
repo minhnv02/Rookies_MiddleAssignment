@@ -65,6 +65,152 @@ namespace MidAssignment.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Author = "Harper Lee",
+                            CategoryId = 1L,
+                            DaysForBorrow = 14,
+                            Description = "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it.",
+                            Image = "tkam.jpg",
+                            IsDeleted = false,
+                            Name = "To Kill a Mockingbird",
+                            ReleaseYear = 1960
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Author = "George Orwell",
+                            CategoryId = 2L,
+                            DaysForBorrow = 14,
+                            Description = "A dystopian novel set in a totalitarian state where critical thought is suppressed under a cult of personality.",
+                            Image = "1984.jpg",
+                            IsDeleted = false,
+                            Name = "1984",
+                            ReleaseYear = 1949
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Author = "F. Scott Fitzgerald",
+                            CategoryId = 1L,
+                            DaysForBorrow = 10,
+                            Description = "A tale of impossible love, dreams, and tragedy set during the Roaring Twenties in America.",
+                            Image = "gatsby.jpg",
+                            IsDeleted = false,
+                            Name = "The Great Gatsby",
+                            ReleaseYear = 1925
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Author = "Robert C. Martin",
+                            CategoryId = 3L,
+                            DaysForBorrow = 21,
+                            Description = "A handbook of agile software craftsmanship that helps programmers write better code.",
+                            Image = "cleancode.jpg",
+                            IsDeleted = false,
+                            Name = "Clean Code",
+                            ReleaseYear = 2008
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Author = "Andrew Hunt, David Thomas",
+                            CategoryId = 3L,
+                            DaysForBorrow = 21,
+                            Description = "From journeyman to master - a guide filled with practical advice for software developers.",
+                            Image = "pragmatic.jpg",
+                            IsDeleted = false,
+                            Name = "The Pragmatic Programmer",
+                            ReleaseYear = 1999
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Author = "Jane Austen",
+                            CategoryId = 4L,
+                            DaysForBorrow = 14,
+                            Description = "A romantic novel of manners that follows the character development of Elizabeth Bennet.",
+                            Image = "pride.jpg",
+                            IsDeleted = false,
+                            Name = "Pride and Prejudice",
+                            ReleaseYear = 1813
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Author = "Frank Herbert",
+                            CategoryId = 5L,
+                            DaysForBorrow = 14,
+                            Description = "Set in the distant future amidst a feudal interstellar society, Dune tells the story of Paul Atreides.",
+                            Image = "dune.jpg",
+                            IsDeleted = false,
+                            Name = "Dune",
+                            ReleaseYear = 1965
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Author = "J.R.R. Tolkien",
+                            CategoryId = 5L,
+                            DaysForBorrow = 14,
+                            Description = "A fantasy novel and children's book following the quest of Bilbo Baggins.",
+                            Image = "hobbit.jpg",
+                            IsDeleted = false,
+                            Name = "The Hobbit",
+                            ReleaseYear = 1937
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Author = "Yuval Noah Harari",
+                            CategoryId = 6L,
+                            DaysForBorrow = 21,
+                            Description = "A book that explores the history of the human species from the emergence of Homo sapiens to the present day.",
+                            Image = "sapiens.jpg",
+                            IsDeleted = false,
+                            Name = "Sapiens: A Brief History of Humankind",
+                            ReleaseYear = 2011
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Author = "Stephen Hawking",
+                            CategoryId = 7L,
+                            DaysForBorrow = 14,
+                            Description = "Hawking's final book addresses the biggest questions of our time.",
+                            Image = "hawking.jpg",
+                            IsDeleted = false,
+                            Name = "Brief Answers to the Big Questions",
+                            ReleaseYear = 2018
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Author = "Paulo Coelho",
+                            CategoryId = 8L,
+                            DaysForBorrow = 10,
+                            Description = "A philosophical novel about the journey of a shepherd boy searching for a worldly treasure.",
+                            Image = "alchemist.jpg",
+                            IsDeleted = false,
+                            Name = "The Alchemist",
+                            ReleaseYear = 1988
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Author = "J.K. Rowling",
+                            CategoryId = 5L,
+                            DaysForBorrow = 14,
+                            Description = "The first novel in the Harry Potter series following a young wizard's adventures at Hogwarts School.",
+                            Image = "harrypotter.jpg",
+                            IsDeleted = false,
+                            Name = "Harry Potter and the Philosopher's Stone",
+                            ReleaseYear = 1997
+                        });
                 });
 
             modelBuilder.Entity("MidAssignment.Domain.Entities.Borrowing", b =>
@@ -106,6 +252,60 @@ namespace MidAssignment.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("BookBorrowingRequest");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ApproverId = "librarian-guid-1",
+                            CreatedAt = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-1",
+                            Status = "Approved"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ApproverId = "librarian-guid-1",
+                            CreatedAt = new DateTime(2023, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-2",
+                            Status = "Approved"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ApproverId = "librarian-guid-1",
+                            CreatedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-3",
+                            Status = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            ApproverId = "librarian-guid-1",
+                            CreatedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-1",
+                            Status = "Approved"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedAt = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-4",
+                            Status = "Waiting"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CreatedAt = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RequestorId = "user-guid-5",
+                            Status = "Waiting"
+                        });
                 });
 
             modelBuilder.Entity("MidAssignment.Domain.Entities.BorrowingDetail", b =>
@@ -137,6 +337,128 @@ namespace MidAssignment.Infrastructure.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("BookBorrowingRequestDetail");
+
+                    b.HasData(
+                        new
+                        {
+                            BorrowingId = 1L,
+                            BookId = 1L,
+                            CreatedAt = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Returned",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 1L,
+                            BookId = 3L,
+                            CreatedAt = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Returned",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 2L,
+                            BookId = 2L,
+                            CreatedAt = new DateTime(2023, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Borrowing",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 2L,
+                            BookId = 5L,
+                            CreatedAt = new DateTime(2023, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Borrowing",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 3L,
+                            BookId = 7L,
+                            CreatedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Rejected",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 3L,
+                            BookId = 9L,
+                            CreatedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Rejected",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 4L,
+                            BookId = 4L,
+                            CreatedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Borrowing",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 4L,
+                            BookId = 8L,
+                            CreatedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Borrowing",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 5L,
+                            BookId = 6L,
+                            CreatedAt = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Pending",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 5L,
+                            BookId = 11L,
+                            CreatedAt = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Pending",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 6L,
+                            BookId = 10L,
+                            CreatedAt = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Pending",
+                            StatusExtend = ""
+                        },
+                        new
+                        {
+                            BorrowingId = 6L,
+                            BookId = 12L,
+                            CreatedAt = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ReturnedAt = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = "Pending",
+                            StatusExtend = ""
+                        });
                 });
 
             modelBuilder.Entity("MidAssignment.Domain.Entities.Cart", b =>
@@ -165,6 +487,26 @@ namespace MidAssignment.Infrastructure.Migrations
                     b.HasKey("BookId", "UserId");
 
                     b.ToTable("Carts");
+
+                    b.HasData(
+                        new
+                        {
+                            BookId = 1,
+                            UserId = "user-guid-1",
+                            Author = "Harper Lee",
+                            DaysForBorrow = 14,
+                            Image = "tkam.jpg",
+                            Name = "To Kill a Mockingbird"
+                        },
+                        new
+                        {
+                            BookId = 3,
+                            UserId = "user-guid-2",
+                            Author = "F. Scott Fitzgerald",
+                            DaysForBorrow = 10,
+                            Image = "gatsby.jpg",
+                            Name = "The Great Gatsby"
+                        });
                 });
 
             modelBuilder.Entity("MidAssignment.Domain.Entities.Category", b =>
@@ -221,6 +563,143 @@ namespace MidAssignment.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BookId = 1L,
+                            Content = "This is a classic that everyone should read at least once. The character development is exceptional.",
+                            CreatedAt = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-1"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BookId = 2L,
+                            Content = "A haunting vision of a totalitarian future. Still relevant today.",
+                            CreatedAt = new DateTime(2023, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-2"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BookId = 3L,
+                            Content = "The symbolism in this book is incredible. Gatsby represents the American dream in all its flawed glory.",
+                            CreatedAt = new DateTime(2023, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-3"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BookId = 4L,
+                            Content = "This book transformed how I write code. Essential reading for any programmer.",
+                            CreatedAt = new DateTime(2023, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-1"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            BookId = 4L,
+                            Content = "I agree! This book should be mandatory in CS courses.",
+                            CreatedAt = new DateTime(2023, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-4"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            BookId = 5L,
+                            Content = "One of the best programming books ever written. Timeless advice.",
+                            CreatedAt = new DateTime(2023, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-2"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            BookId = 6L,
+                            Content = "Jane Austen was ahead of her time. The social commentary is still relevant.",
+                            CreatedAt = new DateTime(2023, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-3"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            BookId = 7L,
+                            Content = "The worldbuilding in this novel is incredible. Herbert created something truly unique.",
+                            CreatedAt = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-5"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            BookId = 8L,
+                            Content = "A perfect introduction to Tolkien's world. I read this to my kids every year.",
+                            CreatedAt = new DateTime(2023, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-4"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            BookId = 9L,
+                            Content = "This book changed my perspective on human history. Fascinating read!",
+                            CreatedAt = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-1"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            BookId = 10L,
+                            Content = "Hawking makes complex physics accessible to everyone. A brilliant mind.",
+                            CreatedAt = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-2"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            BookId = 11L,
+                            Content = "A spiritual journey that makes you think about your own path in life.",
+                            CreatedAt = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-5"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            BookId = 12L,
+                            Content = "The book that sparked a generation's love of reading. Simply magical.",
+                            CreatedAt = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-3"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            BookId = 2L,
+                            Content = "Still incredibly relevant. A classic that seems more prophetic every year.",
+                            CreatedAt = new DateTime(2023, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-1"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            BookId = 12L,
+                            Content = "My kids love this book as much as I did growing up!",
+                            CreatedAt = new DateTime(2023, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            UserId = "user-guid-4"
+                        });
                 });
 
             modelBuilder.Entity("MidAssignment.Domain.Entities.Rating", b =>

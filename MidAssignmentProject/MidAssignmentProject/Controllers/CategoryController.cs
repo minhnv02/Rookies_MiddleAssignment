@@ -32,9 +32,10 @@ namespace MidAssignmentProject.API.Controllers
                     response.Message = "No categories found";
                     return NotFound(response);
                 }
-                categories = categories.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 if (!string.IsNullOrEmpty(name))
-                    categories = categories.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+                    categories = categories.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                categories = categories.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 response.Message = "Get categories successfully";
                 response.Data = categories.ToList();
                 return Ok(response);

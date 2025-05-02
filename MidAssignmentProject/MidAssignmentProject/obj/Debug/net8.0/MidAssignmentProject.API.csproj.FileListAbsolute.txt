@@ -115,9 +115,9 @@ F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentPro
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 F:\CSharp_NET\NashTech_Rookies2025\MinhNV_MidAssignment_BackEnd\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\appsettings.Development.json
-F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\appsettings.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\MidAssignmentProject.API.staticwebassets.endpoints.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\MidAssignmentProject.API.exe
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\appsettings.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\MidAssignmentProject.API.deps.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\MidAssignmentProject.API.runtimeconfig.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\bin\Debug\net8.0\MidAssignmentProject.API.dll
@@ -213,6 +213,7 @@ F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentPr
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\MidAssignmentProject.API.csproj.CoreCompileInputs.cache
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\MidAssignmentProject.API.MvcApplicationPartsAssemblyInfo.cs
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\MidAssignmentProject.API.MvcApplicationPartsAssemblyInfo.cache
+F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\MidAssignmentProject.API.sourcelink.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\scopedcss\bundle\MidAssignmentProject.API.styles.css
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\staticwebassets.build.json
 F:\CSharp_NET\NashTech_MidAssignment_MinhNV\MidAssignmentProject\MidAssignmentProject\obj\Debug\net8.0\staticwebassets.development.json
