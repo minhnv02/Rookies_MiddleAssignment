@@ -61,7 +61,7 @@
         <p>Hello,</p>
         <p>Welcome to Library. Thank you for using our services.</p>
         <p>To experience the service, please activate your account by clicking the button below:</p>
-        <p><a href=""http://localhost:5012/api/auths/active-account/{email}"" class=""btn"">Activate Account</a></p>
+        <p><a href=""http://localhost:5257/api/auths/active-account/{email}"" class=""btn"">Activate Account</a></p>
         <p>If you have any questions or need assistance, please contact our support team.</p>
         <p>Thank you,</p>
         <p>The Support Team</p>

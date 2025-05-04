@@ -37,7 +37,7 @@ namespace MidAssignment.Application.Services.Impl
                 PasswordHash = hashedPassword,
                 PasswordSalt = salt,
                 RoleId = (byte)userRequest.RoleId,
-                Status = StatusUsersConstants.ACTIVE,
+                Status = StatusUsersConstants.IN_ACTIVE,
                 CreatedAt = DateTime.Now,
             };
 

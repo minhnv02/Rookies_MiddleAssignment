@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { Layout, Menu, Button, Typography, Space } from "antd";
+import DropDownProfile from "./DropDownProfile";
 import {
   HomeOutlined,
   ShoppingCartOutlined,
@@ -76,19 +77,7 @@ const Navbar = () => {
         )}
         {auth.role === "user" ? (
           <>
-            <Link to="/profile">
-              <Button type="text" style={{ color: "#fff" }}>
-                Profile
-              </Button>
-            </Link>
-            <Button 
-              icon={<LogoutOutlined />} 
-              type="text" 
-              style={{ color: "#fff" }} 
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+            <DropDownProfile/>
           </>
         ) : auth.role === "admin" ? (
           <Button 

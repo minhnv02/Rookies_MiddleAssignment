@@ -212,34 +212,42 @@ const BorrowingDetailManagement = () => {
   ]
 
   return (
-    <div>
-      <h1 className="text-2xl">Borrowing Detail</h1>
+    <div className="max-w-[1200px] mx-auto p-5 font-sans text-gray-800">
+      <h1 className="text-2xl font-semibold text-slate-800 mb-6 pb-2 border-b border-gray-200">
+        Borrowing Detail
+      </h1>
       {loading ? (
-        <Spin size="large" className="flex justify-center items-center" />
+        <Spin size="large" className="block my-8 mx-auto" />
       ) : (
         <>
-          <h2 className="text-xl mt-4 mb-2">
+          <h2 className="text-xl my-4 py-2 text-slate-700">
             <strong>Requestor</strong> {borrowingData.requestorName}
           </h2>
-          <h2 className="text-xl mt-4 mb-2">
+          <h2 className="text-xl my-4 py-2 text-slate-700">
             <strong>Status of borrowing: </strong>
             {borrowingData.status === "Waiting" ? (
-              <div className="text-yellow-500 inline">{borrowingData.status}</div>
+              <span className="text-amber-500 font-semibold">{borrowingData.status}</span>
             ) : borrowingData.status === "Approved" ? (
-              <div className="text-green-500 inline">{borrowingData.status}</div>
+              <span className="text-emerald-600 font-semibold">{borrowingData.status}</span>
             ) : (
-              <div className="text-red-500 inline">{borrowingData.status}</div>
+              <span className="text-red-500 font-semibold">{borrowingData.status}</span>
             )}
           </h2>
-          <Table
-            columns={columns}
-            dataSource={borrowingDetailData}
-            rowKey="id"
-            scroll={{ y: 300 }}
-            pagination={false}
-          />
+          <div className="rounded-lg overflow-hidden shadow-sm mb-4">
+            <Table
+              columns={columns}
+              dataSource={borrowingDetailData}
+              rowKey="id"
+              scroll={{ y: 300 }}
+              pagination={false}
+              className="bg-white"
+            />
+          </div>
 
-          <Button type="primary" className="bg-blue-500 hover:bg-blue-600 text-white mt-4" onClick={() => navigate(-1)}>
+          <Button 
+            type="primary" 
+            className="bg-blue-500 hover:bg-blue-600 text-white mt-4 py-2 px-4 h-auto rounded-md transition-all duration-300 hover:-translate-y-px hover:shadow-md"
+            onClick={() => navigate(-1)}>
             Back
           </Button>
         </>

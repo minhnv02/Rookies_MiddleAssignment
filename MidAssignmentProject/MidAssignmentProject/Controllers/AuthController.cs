@@ -45,7 +45,7 @@ namespace MidAssignmentProject.WebAPI.Controllers
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginRequest request)
-        {
+            {
             try
             {
                 var (token, refreshToken, role, userId) = await _authService.LoginAsync(request.Email, request.Password);

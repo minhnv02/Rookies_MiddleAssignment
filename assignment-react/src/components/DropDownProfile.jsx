@@ -12,7 +12,7 @@ const DropDownProfile = () => {
   const userItems = [
     {
       label: (
-        <Link to="/profile" className="">
+        <Link to="/profile" className=""> 
           Profile
         </Link>
       ),
