@@ -17,56 +17,6 @@ namespace MidAssignmentProject.API.Controllers
             _commentService = commentService;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetComments()
-        //{
-        //    var response = new GeneralResponse();
-        //    try
-        //    {
-        //        var comments = await _commentService.GetComments();
-        //        if (comments == null || !comments.Any())
-        //        {
-        //            response.Success = false;
-        //            response.Message = "No comments found";
-        //            return NotFound(response);
-        //        }
-        //        response.Message = "Get comments successfully";
-        //        response.Data = comments.ToList();
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Success = false;
-        //        response.Message = ex.Message;
-        //        return Conflict(response);
-        //    }
-        //}
-
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetComment(long id)
-        //{
-        //    var response = new GeneralResponse();
-        //    try
-        //    {
-        //        var comment = await _commentService.GetCommentById(id);
-        //        if (comment == null)
-        //        {
-        //            response.Success = false;
-        //            response.Message = "Comment not found";
-        //            return NotFound(response);
-        //        }
-        //        response.Message = "Get comment successfully";
-        //        response.Data = comment;
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Success = false;
-        //        response.Message = ex.Message;
-        //        return Conflict(response);
-        //    }
-        //}
-
         [HttpPost]
         [Authorize(Roles = "user")]
         public async Task<IActionResult> CreateComment(CommentRequest comment)

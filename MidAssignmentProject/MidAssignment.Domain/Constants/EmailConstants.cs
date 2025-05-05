@@ -131,7 +131,7 @@
         <p>Hello,</p>
         <p>We received a request to reset your password. If you did not make this request, you can ignore this email.</p>
         <p>To reset your password, please click the button below:</p>
-        <p><a href=""http://localhost:5016/Home/Resetpassword?userId=2}"" class=""btn"">Reset Password</a></p>
+        <p><a href=""http://localhost:5257/api/auths/reset-password/{email}"" class=""btn"">Reset Password</a></p>
         <p>If you have any questions or need assistance, please contact our support team.</p>
         <p>Thank you,</p>
         <p>The Support Team</p>
@@ -318,8 +318,8 @@
     <div class=""container"">
         <p>Hello,</p>
         <p>A request has been made to extend the borrowing period for the book with ID {bookId}. Please review the request using the links below:</p>
-        <p><a href=""http://localhost:5016/Home/ApproveExtension?borrowingId={borrowingId}&bookId={bookId}"" class=""btn"">Approve Extension</a></p>
-        <p><a href=""http://localhost:5016/Home/RejectExtension?borrowingId={borrowingId}&bookId={bookId}"" class=""btn"">Reject Extension</a></p>
+        <p><a href=""http://localhost:5257/Home/ApproveExtension?borrowingId={borrowingId}&bookId={bookId}"" class=""btn"">Approve Extension</a></p>
+        <p><a href=""http://localhost:5257/Home/RejectExtension?borrowingId={borrowingId}&bookId={bookId}"" class=""btn"">Reject Extension</a></p>
         <p>If you have any questions or need assistance, please contact our support team.</p>
         <p>Thank you,</p>
         <p>The Support Team</p>

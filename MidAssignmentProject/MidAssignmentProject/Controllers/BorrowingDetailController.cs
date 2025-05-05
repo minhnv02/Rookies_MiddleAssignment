@@ -92,31 +92,6 @@ namespace MidAssignmentProject.API.Controllers
             }
         }
 
-        //[HttpPut("update-returned-at/{borrowingId}/{bookId}")]
-        //[Authorize(Roles = "admin")]
-        //public async Task<IActionResult> UpdateReturnedAtAsync(long borrowingId, long bookId, BorrowingDetailUpdateReturnedAtRequest request)
-        //{
-        //    var response = new GeneralResponse();
-        //    try
-        //    {
-        //        var result = await _borrowingDetailService.UpdateReturnedAtAsync(borrowingId, bookId, request);
-        //        if (!result)
-        //        {
-        //            response.Success = false;
-        //            response.Message = "Update returned at borrowing detail failed";
-        //            return Conflict(response);
-        //        }
-        //        response.Message = "Update returned at borrowing detail successfully";
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Success = false;
-        //        response.Message = ex.Message;
-        //        return Conflict(response);
-        //    }
-        //}
-
         [HttpDelete("{borrowingId}/{bookId}")]
         [Authorize(Roles = "user")]
         public async Task<IActionResult> DeleteAsync(long borrowingId, long bookId)

@@ -449,6 +449,28 @@
         }
       }
     },
+    "/api/auths/request-reset-password/{email}": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/auths/request-active-account/{email}": {
       "get": {
         "tags": [

@@ -90,6 +90,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MidAssignmentProject.WebAPI.Controllers.AuthController",
+    "Method": "RequestResetPasswordAsync",
+    "RelativePath": "api/auths/request-reset-password/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MidAssignmentProject.API.Controllers.BookController",
     "Method": "CreateBook",
     "RelativePath": "api/books",

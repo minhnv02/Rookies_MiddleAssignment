@@ -73,35 +73,6 @@ namespace MidAssignmentProject.API.Controllers
             }
         }
 
-        //[HttpGet("{userId}/{bookId}")]
-        //[Authorize(Roles = "admin,user")]
-        //public async Task<IActionResult> GetCartAsync(string userId, int bookId)
-        //{
-        //    var response = new GeneralResponse();
-        //    try
-        //    {
-        //        var cart = await _cartService.GetCartAsync(userId, bookId);
-
-        //        if (cart == null)
-        //        {
-        //            response.Success = false;
-        //            response.Message = "Book not found in cart";
-        //            return NotFound(response);
-        //        }
-
-        //        response.Success = true;
-        //        response.Message = "Get cart successfully";
-        //        response.Data = cart;
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Success = false;
-        //        response.Message = ex.Message;
-        //        return Conflict(response);
-        //    }
-        //}
-
         [HttpGet("{userId}")]
         [Authorize(Roles = "user")]
         public async Task<IActionResult> GetByUserAsync(string userId)

@@ -58,7 +58,7 @@ const Navbar = () => {
   return (
     <Header style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
       <Link to="/" style={{ display: "flex", alignItems: "center" }}>
-        <img src="/logo.png" alt="logo" style={{ width: 50, height: 50 }} />
+        <img src="/src/assets/digital-library.png" alt="logo" style={{ width: 50, height: 50 }} />
         <Title level={4} style={{ margin: "0 0 0 16px", color: "#fff" }}>
           Library Management System
         </Title>

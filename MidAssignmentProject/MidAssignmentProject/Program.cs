@@ -38,9 +38,6 @@ namespace MidAssignmentProject
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(opt =>
             {
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //opt.IncludeXmlComments(xmlPath);
                 var securitySchema = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",

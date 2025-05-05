@@ -22,7 +22,7 @@ namespace MidAssignment.Application.Models.Requests
 
     public class BorrowingDetailUpdateStatusExtendRequest
     {
-        public string StatusExtend { get; set; } = StatusBorrowingExtend.PENDING;
+        public string StatusExtend { get; set; } = StatusBorrowingExtend.WAITING;
         public DateTime? ReturnedAt { get; set; }
     }
 }

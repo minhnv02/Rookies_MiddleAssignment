@@ -119,32 +119,6 @@ namespace MidAssignmentProject.API.Controllers
             }
         }
 
-        //[HttpGet("approver/{approverId}")]
-        //[Authorize(Roles = "user,admin")]
-        //public async Task<IActionResult> GetBorrowingsByApproverId(string approverId)
-        //{
-        //    var response = new GeneralResponse();
-        //    try
-        //    {
-        //        var borrowings = await _borrowingService.GetByApproverIdAsync(approverId);
-        //        if (borrowings == null || !borrowings.Any())
-        //        {
-        //            response.Success = false;
-        //            response.Message = "No borrowing found";
-        //            return NotFound(response);
-        //        }
-        //        response.Message = "Get borrowings successfully";
-        //        response.Data = borrowings.ToList();
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Success = false;
-        //        response.Message = ex.Message;
-        //        return Conflict(response);
-        //    }
-        //}
-
         [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetBorrowings()

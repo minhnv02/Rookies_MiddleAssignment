@@ -188,7 +188,7 @@ namespace MidAssignment.Application.Services.Impl
         {
             var borrowingDetails = await _unitOfWork
                 .BorrowingDetailRepository
-                .GetAllAsync(b => !b.IsDeleted && b.StatusExtend == StatusBorrowingExtend.PENDING
+                .GetAllAsync(b => !b.IsDeleted && b.StatusExtend == StatusBorrowingExtend.WAITING
                 , b => b.Borrowing.Requestor, b => b.Book);
             return _mapper.Map<IEnumerable<BorrowingDetailResponse>>(borrowingDetails);
         }

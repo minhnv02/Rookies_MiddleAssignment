@@ -84,6 +84,33 @@ namespace MidAssignmentProject.WebAPI.Controllers
             }
         }
 
+        [HttpGet("request-reset-password/{email}")]
+        public async Task<IActionResult> RequestResetPasswordAsync(string email)
+        {
+            try
+            {
+                var user = await _userService.GetUserByEmailAsync(email);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException("User not found");
+                }
+                var isSuccess = await _emailService.SendEmailAsync(user.Email, EmailConstants.SUBJECT_RESET_PASSWORD, EmailConstants.BodyResetPasswordEmail(email));
+                if (!isSuccess)
+                {
+                    throw new InvalidOperationException("Failed to send email");
+                }
+                var response = new GeneralResponse
+                {
+                    Message = "Reset password email sent successfully"
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
+
         [HttpGet("request-active-account/{email}")]
         public async Task<IActionResult> RequestActiveAccountAsync(string email)
         {
