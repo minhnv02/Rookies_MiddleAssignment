@@ -45,7 +45,7 @@ const BorrowingExtend = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          message.success("Extension status updated successfully")
+          alert("Extension status updated successfully")
           setBorrowingDetailData((prev) =>
             prev.map((item) => (item.bookId === bookId ? { ...item, statusExtend, returnedAt } : item)),
           )

@@ -145,7 +145,7 @@ const Home = ({ endpoint }) => {
     axiosInstance
       .post(`/carts`, cart)
       .then((res) => {
-        if (res.data.success) message.success("Added to cart successfully")
+        if (res.data.success) alert("Added to cart successfully")
         else message.warning("Book already in cart")
       })
       .catch((err) => {

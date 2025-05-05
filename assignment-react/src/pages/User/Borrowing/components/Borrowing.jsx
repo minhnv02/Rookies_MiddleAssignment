@@ -51,7 +51,7 @@ const Borrowing = () => {
         .delete(`/borrowings/${id}`)
         .then((res) => {
           if (res.data.success) {
-            message.success("Borrowing has been cancelled");
+            alert("Borrowing has been cancelled");
             setBorrowingData((prev) => prev.filter((item) => item.id !== id));
           } else {
             message.error(res.data.message);

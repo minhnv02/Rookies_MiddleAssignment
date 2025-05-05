@@ -40,7 +40,6 @@ const UpdateBook = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
-
         // Fetch book data
         const bookResponse = await axiosInstance.get(`/books/${id}`)
         if (bookResponse.data.success) {
@@ -97,7 +96,7 @@ const UpdateBook = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          message.success("Book updated successfully")
+          alert("Book updated successfully")
           navigate(`/admin/books/${id}`)
         } else {
           message.error(response.data.message)
@@ -115,7 +114,7 @@ const UpdateBook = () => {
       setSelectedFile(file)
       setOriginalImage(null)
     } else {
-      message.error("You can only upload image files!")
+      alert("You can only upload image files!")
     }
   }
 

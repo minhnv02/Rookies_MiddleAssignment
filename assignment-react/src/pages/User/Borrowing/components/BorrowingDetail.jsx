@@ -97,7 +97,7 @@ const BorrowingDetail = () => {
         .delete(`/borrowing-details/${id}/${bookId}`)
         .then((res) => {
           if (res.data.success) {
-            message.success("Borrowing has been deleted");
+            alert("Borrowing has been deleted");
             setBorrowingDetailData(
               borrowingDetailData.filter((detail) => detail.bookId !== bookId)
             );
@@ -122,7 +122,7 @@ const BorrowingDetail = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          message.success("Borrowing has been extended");
+          alert("Borrowing has been extended");
           setBorrowingDetailData(
             borrowingDetailData.map((detail) =>
               detail.bookId === bookId

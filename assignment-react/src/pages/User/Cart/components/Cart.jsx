@@ -47,7 +47,7 @@ const Cart = () => {
         message.error(response.data.message);
       }
     } catch (error) {
-      message.error("Failed to remove book from cart");
+      message.error(`Failed to remove book from cart: ${error.message}`);
     }
   };
 
@@ -85,7 +85,7 @@ const Cart = () => {
         borrowingRequest
       );
       if (response.data.success) {
-        message.success("Books borrowed successfully");
+        alert("Books borrowed successfully");
 
         // Remove borrowed books from cart in the DB
         for (const book of selectedBooks) {

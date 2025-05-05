@@ -102,21 +102,21 @@ const BookDetail = () => {
 
   const addToCart = (cart) => {
     const userId = auth.userId
-    if (!userId) return message.error("Please login to add books to cart")
+    if (!userId) return alert("Please login to add books to cart")
     axiosInstance
       .post(`/carts`, cart)
       .then((res) => {
         if (res.data.success) {
-          message.success("Added to cart successfully")
+          alert("Added to cart successfully")
         } else {
-          message.warning("Book already in cart")
+          alert("Book already in cart")
         }
       })
       .catch((error) => {
         if (error.response && error.response.status === 409) {
-          message.warning("Book already in cart")
+          alert("Book already in cart")
         } else {
-          message.error(error.message || "Failed to add to cart")
+          alert(error.message || "Failed to add to cart")
         }
       })
   }
@@ -143,7 +143,7 @@ const BookDetail = () => {
           .catch((error) => {
             console.log("Get newest comment error:", error.message)
           })
-        message.success("Comment added successfully")
+        alert("Comment added successfully")
       } else {
         message.error(response.data.message)
       }
@@ -162,7 +162,7 @@ const BookDetail = () => {
       if (response.data.success) {
         setComments(comments.map((comment) => (comment.id === id ? { ...comment, content: updatedContent } : comment)))
         setEditingCommentId(null)
-        message.success("Comment updated successfully")
+        alert("Comment updated successfully")
       } else {
         message.error(response.data.message)
       }
@@ -176,7 +176,7 @@ const BookDetail = () => {
       const response = await axiosInstance.delete(`/comments/${id}`)
       if (response.data.success) {
         setComments(comments.filter((comment) => comment.id !== id))
-        message.success("Comment deleted successfully")
+        alert("Comment deleted successfully")
       } else {
         message.error(response.data.message)
       }

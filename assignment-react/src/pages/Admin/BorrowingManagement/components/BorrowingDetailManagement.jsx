@@ -59,7 +59,7 @@ const BorrowingDetailManagement = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          message.success("Book has been marked as returned")
+          alert("Book has been marked as returned")
           setBorrowingDetailData((prev) =>
             prev.map((item) => (item.bookId === bookId ? { ...item, status: "Returned" } : item)),
           )
@@ -92,7 +92,7 @@ const BorrowingDetailManagement = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          message.success("Extension status updated successfully")
+          alert("Extension status updated successfully")
           setBorrowingDetailData((prev) =>
             prev.map((item) => (item.bookId === bookId ? { ...item, statusExtend, returnedAt } : item)),
           )

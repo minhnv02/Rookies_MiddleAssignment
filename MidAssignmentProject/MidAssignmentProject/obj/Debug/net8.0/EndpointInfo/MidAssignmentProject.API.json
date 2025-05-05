@@ -4419,6 +4419,10 @@
             "minLength": 1,
             "type": "string"
           },
+          "approverId": {
+            "type": "string",
+            "nullable": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"

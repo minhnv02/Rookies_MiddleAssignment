@@ -54,7 +54,7 @@ const CreateBook = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          message.success("Book created successfully")
+          alert("Book created successfully")
           navigate(-1)
         } else {
           message.error(response.data.message)
@@ -71,7 +71,7 @@ const CreateBook = () => {
     if (file && file.type.startsWith("image/")) {
       setSelectedFile(file)
     } else {
-      message.error("You can only upload image files!")
+      alert("You can only upload image files!")
     }
   }
 

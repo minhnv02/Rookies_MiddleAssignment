@@ -49,7 +49,7 @@ const BorrowingManagement = () => {
         approverId: auth.userId,
       });
       if (response.data.success) {
-        message.success("Borrowing approved successfully");
+        alert("Borrowing approved successfully");
         setBorrowings((prev) =>
           prev.map((borrowing) =>
             borrowing.id === id
@@ -72,7 +72,7 @@ const BorrowingManagement = () => {
         approverId: auth.userId,
       });
       if (response.data.success) {
-        message.success("Borrowing rejected successfully");
+        alert("Borrowing rejected successfully");
         setBorrowings((prev) =>
           prev.map((borrowing) =>
             borrowing.id === id

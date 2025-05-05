@@ -79,18 +79,10 @@ const TableBook = () => {
       )
     ) {
       axiosInstance
-        .delete(`/carts/${id}`)
-        .then(() => {
-          // Cart deleted successfully
-        })
-        .catch(() => {
-          // Handle silently or add message.error if needed
-        })
-      axiosInstance
         .delete(`/books/${id}`)
         .then((res) => {
           if (res.data.success) {
-            message.success("Book deleted successfully")
+            alert("Book deleted successfully")
             setBooksData(booksData.filter((book) => book.id !== id))
           } else {
             message.error(res.data.message)

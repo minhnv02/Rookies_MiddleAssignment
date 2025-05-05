@@ -74,7 +74,7 @@ const TableCategory = () => {
       .delete(`/categories/${deleteCategoryId}/${newCategoryId}`)
       .then((res) => {
         if (res.data.success) {
-          message.success("Category deleted successfully");
+          alert("Category deleted successfully");
           setCategoriesData(
             categoriesData.filter(
               (category) => category.id !== deleteCategoryId
@@ -100,7 +100,7 @@ const TableCategory = () => {
         .put(`/categories/${id}`, { name })
         .then((res) => {
           if (res.data.success) {
-            message.success("Category updated successfully");
+            alert("Category updated successfully");
             setCategoriesData(
               categoriesData.map((category) =>
                 category.id === id ? { ...category, name } : category
@@ -119,7 +119,7 @@ const TableCategory = () => {
         .post("/categories", { name })
         .then((res) => {
           if (res.data.success) {
-            message.success("Category created successfully");
+            alert("Category created successfully");
             setCategoriesData([...categoriesData, res.data.data]);
           } else {
             message.error(res.data.message);
