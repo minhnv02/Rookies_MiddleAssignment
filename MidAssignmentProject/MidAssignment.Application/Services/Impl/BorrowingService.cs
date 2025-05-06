@@ -34,7 +34,7 @@ namespace MidAssignment.Application.Services.Impl
             }
             var borrowing = new Borrowing
             {
-                ApproverId = "1b9857fa60414f56a8f0b04445853105",
+                ApproverId = "a5646b9bf96949e9a54debc29a2fc7ed",
                 RequestorId = request.RequestorId,
                 CreatedAt = DateTime.Now,
                 Status = StatusBorrowing.WAITING,

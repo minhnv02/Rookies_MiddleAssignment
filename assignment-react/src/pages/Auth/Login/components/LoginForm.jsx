@@ -33,7 +33,7 @@ const LoginForm = () => {
       } else navigate("/home");
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        message.error(error.response.data);
+        alert(error.response.data);
       } else {
         message.error("Login failed");
       }

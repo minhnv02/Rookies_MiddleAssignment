@@ -21,7 +21,7 @@ const Cart = () => {
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          message.warning("No books in cart");
+          alert("No books in cart");
         } else {
           message.error("Failed to fetch cart");
         }
@@ -58,10 +58,10 @@ const Cart = () => {
     }
 
     if (selectedRowKeys.length > 5) {
-      message.error("You cannot borrow more than 5 books at a time");
+      alert("You cannot borrow more than 5 books at a time");
       return;
     }
-
+    
     const selectedBooks = cart.filter((book) =>
       selectedRowKeys.includes(book.bookId)
     );
@@ -99,11 +99,11 @@ const Cart = () => {
         setCart(remainingCart);
         setSelectedRowKeys([]);
       } else {
-        message.error(response.data.message);
+        alert(response.data.message);
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        message.error(error.response.data.message);
+        alert(error.response.data.message);
       } else {
         message.error("Failed to borrow books");
       }

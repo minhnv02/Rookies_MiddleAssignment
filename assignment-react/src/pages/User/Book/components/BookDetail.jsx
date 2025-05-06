@@ -51,6 +51,8 @@ const BookDetail = () => {
   const [editingCommentId, setEditingCommentId] = useState(null)
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const [newRating, setNewRating] = useState(0)
+  const [ratingDescription, setRatingDescription] = useState("")
 
   useEffect(() => {
     const fetchBookDetail = async () => {
@@ -87,6 +89,7 @@ const BookDetail = () => {
         const response = await axiosInstance.get(`/ratings/book/${bookId}`)
         if (response.data.success) {
           setRatingDatas(response.data.data)
+          console.log("Ratings data:", response.data.data) // Add this line to debug
         } else {
           message.error(response.data.message)
         }
@@ -185,6 +188,35 @@ const BookDetail = () => {
     }
   }
 
+  const handleAddRating = async () => {
+    if (!auth.userId) return message.error("Please login to add a rating")
+    if (newRating === 0) return message.error("Please select a rating")
+
+    try {
+      const response = await axiosInstance.get(`/ratings/book/${bookId}`, {
+        rate: newRating,
+        description: ratingDescription,
+        bookId,
+        userId: auth.userId,
+      })
+
+      if (response.data.success) {
+        // Fetch the newly created rating
+        const newRatingResponse = await axiosInstance.get(`/ratings/book/${bookId}`)
+        if (newRatingResponse.data.success) {
+          setRatingDatas(newRatingResponse.data.data)
+          setNewRating(0)
+          setRatingDescription("")
+          message.success("Rating added successfully")
+        }
+      } else {
+        message.error(response.data.message)
+      }
+    } catch (error) {
+      message.error(error.message || "Failed to add rating")
+    }
+  }
+
   const renderCommentActions = (comment) => {
     if (comment.userId === auth.userId) {
       if (editingCommentId === comment.id) {
@@ -260,7 +292,7 @@ const BookDetail = () => {
                   <div className="book-image-container">
                     <img
                       alt={book.name}
-                      src={book.image || "https://via.placeholder.com/300x450"}
+                      src={book.image}
                       className="book-image"
                     />
                   </div>
@@ -446,7 +478,7 @@ const BookDetail = () => {
                         dataSource={ratingDatas}
                         renderItem={(rating) => (
                           <List.Item
-                            key={rating.bookId + rating.userId || Math.random().toString()}
+                            key={ Math.random().toString()}
                             className="rating-item"
                           >
                             <List.Item.Meta
@@ -477,6 +509,41 @@ const BookDetail = () => {
                       />
                     ) : (
                       <Empty description="No ratings yet" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                    )}
+
+                    {auth.role === "user" && (
+                      <div className="add-rating-section">
+                        <Divider />
+                        <Form onFinish={handleAddRating} layout="vertical" className="rating-form">
+                          <Form.Item
+                            name="rating"
+                            label="Your Rating"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please select a rating!",
+                              },
+                            ]}
+                          >
+                            <Rate
+                              value={newRating}
+                              onChange={(value) => setNewRating(value)}
+                              className="add-rating-stars"
+                            />
+                          </Form.Item>
+                         
+                          <Form.Item className="rating-submit">
+                            <Button
+                              type="primary"
+                              htmlType="submit"
+                              icon={<StarOutlined />}
+                              className="add-rating-button"
+                            >
+                              Add Rating
+                            </Button>
+                          </Form.Item>
+                        </Form>
+                      </div>
                     )}
                   </Card>
                 </Col>
@@ -662,6 +729,49 @@ const BookDetail = () => {
           border-radius: 8px;
           resize: none;
           padding: 12px;
+        }
+
+        .add-rating-section {
+          margin-top: 16px;
+        }
+        
+        .rating-form {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .add-rating-stars {
+          font-size: 24px;
+        }
+        
+        .rating-input {
+          border-radius: 8px;
+          resize: none;
+          padding: 12px;
+          font-size: 14px;
+          border: 1px solid #d9d9d9;
+          transition: all 0.3s;
+        }
+        
+        .rating-input:hover, .rating-input:focus {
+          border-color: #40a9ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+        
+        .rating-submit {
+          display: flex;
+          justify-content: flex-end;
+          margin-bottom: 0;
+        }
+        
+        .add-rating-button {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 40px;
+          padding: 0 16px;
+          font-size: 14px;
+          border-radius: 6px;
         }
 
         @media (max-width: 768px) {

@@ -23,7 +23,7 @@ const SignupForm = () => {
       navigate("/login");
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        message.error(error.response.data);
+        alert(error.response.data);
       } else {
         message.error("Registration failed");
       }
